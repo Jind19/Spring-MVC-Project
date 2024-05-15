@@ -6,6 +6,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 
 @Controller
 public class TodoController {
@@ -15,7 +17,8 @@ public class TodoController {
 
     @RequestMapping(value = "/list-todos", method = RequestMethod.GET)
     public String showLoginPage(ModelMap model) {
-        model.addAttribute("todos", service.retrieveTodos("in28Minutes"));
+        List<Todo> todoList = service.retrieveTodos("in28Minutes");
+        model.addAttribute("todos", todoList);
         return "list-todos";
     }
 
