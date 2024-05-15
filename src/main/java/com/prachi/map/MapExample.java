@@ -1,6 +1,9 @@
 package com.prachi.map;
 
+import com.prachi.todo.Todo;
+
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class MapExample {
@@ -17,6 +20,13 @@ public class MapExample {
         map.put("Ajay", 10);
         System.out.println(map);
 
+        Iterator<String> iterator = map.keySet().iterator();
+
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            Integer integer = map.get(key);
+            System.out.println(integer);
+        }
 
     }
 }
