@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -17,22 +18,32 @@ public class TodoController {
     TodoService service;
 
     @RequestMapping(value = "/list-todos", method = RequestMethod.GET)
-    public String showTodoList(ModelMap model) {
-        model.addAttribute("todos", service.retrieveTodos("in28Minutes"));
+    public String showTodoList(ModelMap model, HttpServletRequest request) {
+        String name = (String) request.getSession().getAttribute("name");
+        model.addAttribute("todos", service.retrieveTodos(name));
         return "list-todos";
     }
 
-    @RequestMapping(value = "/add-todo", method = RequestMethod.GET)
+    @RequestMapping(value = "/add-todos", method = RequestMethod.GET)
     public String showTodoPage() {
-        return "todo";
+        return "todos";
     }
 
     @RequestMapping(value = "/add-todos", method = RequestMethod.POST)
-    public String addTodo(ModelMap model, @RequestParam String desc) {
-        service.addTodo((String) model.get("name"), desc, new Date(), false);
-        model.clear();// to prevent request parameter "name" to be passed
-        return "redirect:/list-todos";
+    public String addTodo(ModelMap model, @RequestParam String desc, HttpServletRequest request) {
+        String name = (String) request.getSession().getAttribute("name");
+        service.addTodo(name, desc, new Date(), false  );
+        return "redirect:list-todos";
     }
 
+    @RequestMapping(value = "/delete-todos", method = RequestMethod.GET)
+    public String showDeletePage(){
+        return "delete";
+    }
 
+    @RequestMapping(value = "/delete-todos", method = RequestMethod.POST)
+    public String deleteTodoforController(@RequestParam int id){
+        service.deleteTodo(id);
+        return "redirect:list-todos";
+    }
 }
