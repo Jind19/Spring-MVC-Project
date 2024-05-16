@@ -31,6 +31,7 @@
                     <td>${todo.desc}</td>
                     <td>${todo.targetDate}</td>
                     <td>${todo.done}</td>
+                    <td><a class="btn btn-danger" href="/delete-todos-here?id=${todo.id}">Delete Here</a></td>
                   </tr>
             </c:forEach>
         </tbody>
@@ -40,7 +41,7 @@
 
 <div>
 <a class="btn btn-success" href="/add-todos">Add</a>
-<a class="btn btn-success" href="/delete-todos">Delete</a>
+<a class="btn btn-danger" href="/delete-todos">Delete</a>
 </div>
 
 <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
